@@ -37,11 +37,11 @@
 // ------------------------------------------------------------------------------------
 // Protótipos de função
 
-void imprimirCabecalho(int mes, int ano);
+void imprimirCabecalho(int mes, int ano, int tamanhoAno);
 
 int imprimirConteudo(int mes, int ano, int diaSemana);
 
-int imprimirMes(int mes, int ano, int diaSemana);
+int imprimirMes(int mes, int ano, int diaSemana, int tamanhoAno);
 
 void imprimirCalendario(int ano);
 
@@ -51,9 +51,11 @@ int diasMes(int mes, int ano);
 
 int primeiroDiaAno(int ano);
 
-void centralizarCabecalho(int mes, int ano);
+void centralizarCabecalho(int mes, int tamanhoAno);
 
 void printEspacos(int n);
+
+int tamanhoDoAno(int ano);
 
 // ------------------------------------------------------------------------------------
 // Main
@@ -72,10 +74,10 @@ int main(){
 // ------------------------------------------------------------------------------------
 // Declaração de funções
 
-void imprimirCabecalho(int mes, int ano) {
+void imprimirCabecalho(int mes, int ano, int tamanhoAno) {
 
     printf("\n\n");
-    centralizarCabecalho(mes, ano); // centraliza o cabeçalho superior
+    centralizarCabecalho(mes, tamanhoAno); // centraliza o cabeçalho superior
     
     switch(mes) {
         case 0:
@@ -140,9 +142,9 @@ int imprimirConteudo(int mes, int ano, int diaSemana) {
 
 }
 
-int imprimirMes(int mes, int ano, int diaSemana) {
+int imprimirMes(int mes, int ano, int diaSemana, int tamanhoAno) {
 
-    imprimirCabecalho(mes, ano);
+    imprimirCabecalho(mes, ano, tamanhoAno);
     int diaSemanaProx = imprimirConteudo(mes, ano, diaSemana);
 
     return diaSemanaProx;
@@ -191,18 +193,18 @@ void imprimirCalendario(int ano) {
     printf("\n         CALENDARIO:         ");
 
     int primeiroDia = primeiroDiaAno(ano);
+    int tamanhoAno = tamanhoDoAno(ano);
 
     for(int i=0; i<12; i++){
-        primeiroDia = imprimirMes(i, ano, primeiroDia); // atualiza o primeiro dia da semana de cada mês sem necessidade de usar a congruencia de zeller dnv
+        primeiroDia = imprimirMes(i, ano, primeiroDia, tamanhoAno); // atualiza o primeiro dia da semana de cada mês sem necessidade de usar a congruencia de zeller dnv
     }
 
 }
 
-void centralizarCabecalho(int mes, int ano) {
+void centralizarCabecalho(int mes, int tamanhoAno) {
     
     int nEspacos;
     int tamanhoMes;
-    int tamanhoAno;
     
     // pega o tamanho do nome do mês
     switch(mes){
@@ -220,17 +222,12 @@ void centralizarCabecalho(int mes, int ano) {
        case 11: tamanhoMes = LEN_DEZEMBRO; break;
     }
     
-    if(ano>=1000) tamanhoAno = 4;
-    else if(ano >=100) tamanhoAno = 3;
-    else if(ano >= 10) tamanhoAno = 2;
-    else tamanhoAno = 1;
-    
     // pra que o texto esteja centralizado, o tamanho dele (contando os espaços) deve ser igual ao tamanho da linha
     // logo, o numero de espaços deve ser igual ao tamanho livre (tamanhoLinha - tamanhoEscrito) dividido por dois (tem dois lados)
     // como só precisa printar de um lado, printa só o número de espaços antes
     
     // 4 -> strlen(" de ") pra compensar o resto do cabeçalho no cálculo do texto escrito
-    nEspacos = (LEN_CABECALHO - (tamanhoMes + 4 + tamanhoAno))/2; 
+    nEspacos = (LEN_CABECALHO - (tamanhoMes + 4 + tamanhoAno))/2;
     
     printEspacos(nEspacos);
     
@@ -240,4 +237,11 @@ void printEspacos(int n) {
     for(int i=0;i<n;i++){
         putchar(' ');
     }
+}
+
+int tamanhoDoAno(int ano) {
+    if(ano>=1000) return 4;
+    else if(ano >=100) return 3;
+    else if(ano >= 10) return 2;
+    return 1;
 }
