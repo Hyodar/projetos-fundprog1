@@ -9,7 +9,26 @@
 // ==================================================
 
 #include <stdio.h>
-#include <string.h>
+
+// constantes do comprimento do nome de cada mês pra evitar repetições de strlen()
+#define LEN_JANEIRO 7
+#define LEN_FEVEREIRO 9
+#define LEN_MARCO 5
+#define LEN_ABRIL 5
+#define LEN_MAIO 4
+#define LEN_JUNHO 5
+#define LEN_JULHO 5
+#define LEN_AGOSTO 6
+#define LEN_SETEMBRO 8
+#define LEN_OUTUBRO 7
+#define LEN_NOVEMBRO 8
+#define LEN_DEZEMBRO 8
+
+// constante do comprimento da linha de cabeçalho (DOM SEG...)
+#define LEN_CABECALHO 28
+
+// ------------------------------------------------------------------------------------
+// Protótipos de função
 
 void imprimirCabecalho(int mes, int ano);
 
@@ -29,6 +48,9 @@ void centralizarCabecalho(int mes);
 
 void printEspacos(int n);
 
+// ------------------------------------------------------------------------------------
+// Main
+
 int main(){
     int ano;
     
@@ -39,6 +61,9 @@ int main(){
     
     return 0;
 }
+
+// ------------------------------------------------------------------------------------
+// Declaração de funções
 
 void imprimirCabecalho(int mes, int ano) {
 
@@ -84,7 +109,7 @@ void imprimirCabecalho(int mes, int ano) {
             break;
     }
 
-    printf("\nDOM SEG TER QUA QUI SEX SAB\n");
+    printf("\n DOM SEG TER QUA QUI SEX SAB\n");
 
 }
 
@@ -92,7 +117,7 @@ int imprimirConteudo(int mes, int ano, int diaSemana) {
 
     int nDias = diasMes(mes, ano);
 
-    printEspacos(3*diaSemana); // enche de espaços onde seriam os dias do outro mês
+    printEspacos(4*diaSemana); // enche de espaços onde seriam os dias do outro mês
 
     for(int i=1; i<=nDias; i++) {
         diaSemana = diaSemana%7;
@@ -155,6 +180,8 @@ int primeiroDiaAno(int ano) {
 }
 
 void imprimirCalendario(int ano) {
+    
+    printf("\n         CALENDARIO:         ");
 
     int primeiroDia = primeiroDiaAno(ano);
 
@@ -168,29 +195,30 @@ void centralizarCabecalho(int mes) {
     
     int nEspacos;
     int tamanhoMes;
-    int tamanhoLinha = strlen("DOM SEG TER QUA QUI SEX SAB"); // pega o tamanho total da linha
+    int tamanhoLinha = LEN_CABECALHO; // pega o tamanho total da linha
     
     // pega o tamanho do nome do mês
     switch(mes){
-       case 0: tamanhoMes = strlen("Janeiro"); break;
-       case 1: tamanhoMes = strlen("Fevereiro"); break;
-       case 2: tamanhoMes = strlen("Marco"); break;
-       case 3: tamanhoMes = strlen("Abril"); break;
-       case 4: tamanhoMes = strlen("Maio"); break;
-       case 5: tamanhoMes = strlen("Junho"); break;
-       case 6: tamanhoMes = strlen("Julho"); break;
-       case 7: tamanhoMes = strlen("Agosto"); break;
-       case 8: tamanhoMes = strlen("Setembro"); break;
-       case 9: tamanhoMes = strlen("Outubro"); break;
-       case 10: tamanhoMes = strlen("Novembro"); break;
-       case 11: tamanhoMes = strlen("Dezembro"); break;
+       case 0: tamanhoMes = LEN_JANEIRO; break;
+       case 1: tamanhoMes = LEN_FEVEREIRO; break;
+       case 2: tamanhoMes = LEN_MARCO; break;
+       case 3: tamanhoMes = LEN_ABRIL; break;
+       case 4: tamanhoMes = LEN_MAIO; break;
+       case 5: tamanhoMes = LEN_JUNHO; break;
+       case 6: tamanhoMes = LEN_JULHO; break;
+       case 7: tamanhoMes = LEN_AGOSTO; break;
+       case 8: tamanhoMes = LEN_SETEMBRO; break;
+       case 9: tamanhoMes = LEN_OUTUBRO; break;
+       case 10: tamanhoMes = LEN_NOVEMBRO; break;
+       case 11: tamanhoMes = LEN_DEZEMBRO; break;
     }
     
     // pra que o texto esteja centralizado, o tamanho dele (contando os espaços) deve ser igual ao tamanho da linha
     // logo, o numero de espaços deve ser igual ao tamanho livre (tamanhoLinha - tamanhoEscrito) dividido por dois (tem dois lados)
     // como só precisa printar de um lado, printa só o número de espaços antes
     
-    nEspacos = (tamanhoLinha - (tamanhoMes + strlen(" de AAAA")))/2; 
+    // 8 -> strlen("de AAAA")
+    nEspacos = (tamanhoLinha - (tamanhoMes + 8))/2; 
     
     printEspacos(nEspacos);
     
