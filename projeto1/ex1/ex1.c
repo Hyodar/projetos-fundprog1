@@ -8,7 +8,14 @@
 //  Projeto Prático I
 // ==================================================
 
+
+// ------------------------------------------------------------------------------------
+// Bibliotecas
+
 #include <stdio.h>
+
+// ------------------------------------------------------------------------------------
+// Constantes
 
 // constantes do comprimento do nome de cada mês pra evitar repetições de strlen()
 #define LEN_JANEIRO 7
@@ -24,8 +31,8 @@
 #define LEN_NOVEMBRO 8
 #define LEN_DEZEMBRO 8
 
-// constante do comprimento da linha de cabeçalho (DOM SEG...)
-#define LEN_CABECALHO 28
+// constante do comprimento da linha de cabeçalho ( DOM SEG...)
+#define LEN_CABECALHO 29
 
 // ------------------------------------------------------------------------------------
 // Protótipos de função
@@ -44,7 +51,7 @@ int diasMes(int mes, int ano);
 
 int primeiroDiaAno(int ano);
 
-void centralizarCabecalho(int mes);
+void centralizarCabecalho(int mes, int ano);
 
 void printEspacos(int n);
 
@@ -68,7 +75,7 @@ int main(){
 void imprimirCabecalho(int mes, int ano) {
 
     printf("\n\n");
-    centralizarCabecalho(mes); // centraliza o cabeçalho superior
+    centralizarCabecalho(mes, ano); // centraliza o cabeçalho superior
     
     switch(mes) {
         case 0:
@@ -124,7 +131,7 @@ int imprimirConteudo(int mes, int ano, int diaSemana) {
 
         if(diaSemana == 0 && i>1) printf("\n");
 
-        printf("%3d ", i);
+        printf("%4d", i);
 
         diaSemana++;
     }
@@ -191,11 +198,11 @@ void imprimirCalendario(int ano) {
 
 }
 
-void centralizarCabecalho(int mes) {
+void centralizarCabecalho(int mes, int ano) {
     
     int nEspacos;
     int tamanhoMes;
-    int tamanhoLinha = LEN_CABECALHO; // pega o tamanho total da linha
+    int tamanhoAno;
     
     // pega o tamanho do nome do mês
     switch(mes){
@@ -213,12 +220,17 @@ void centralizarCabecalho(int mes) {
        case 11: tamanhoMes = LEN_DEZEMBRO; break;
     }
     
+    if(ano>=1000) tamanhoAno = 4;
+    else if(ano >=100) tamanhoAno = 3;
+    else if(ano >= 10) tamanhoAno = 2;
+    else tamanhoAno = 1;
+    
     // pra que o texto esteja centralizado, o tamanho dele (contando os espaços) deve ser igual ao tamanho da linha
     // logo, o numero de espaços deve ser igual ao tamanho livre (tamanhoLinha - tamanhoEscrito) dividido por dois (tem dois lados)
     // como só precisa printar de um lado, printa só o número de espaços antes
     
-    // 8 -> strlen("de AAAA")
-    nEspacos = (tamanhoLinha - (tamanhoMes + 8))/2; 
+    // 4 -> strlen(" de ") pra compensar o resto do cabeçalho no cálculo do texto escrito
+    nEspacos = (LEN_CABECALHO - (tamanhoMes + 4 + tamanhoAno))/2; 
     
     printEspacos(nEspacos);
     
