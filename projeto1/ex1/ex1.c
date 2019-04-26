@@ -63,7 +63,7 @@ int tamanhoDoAno(int ano);
 int main(){
     int ano;
     
-    printf("Insira o ano do calendário: ");
+    printf("Insira o ano do calendário a ser gerado: ");
     scanf("%d", &ano);
     
     imprimirCalendario(ano);

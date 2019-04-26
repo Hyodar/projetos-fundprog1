@@ -8,7 +8,6 @@
 //  Projeto Prático I
 // ==================================================
 
-
 // ------------------------------------------------------------------------------------
 // Bibliotecas
 
@@ -40,7 +39,7 @@ int main ()
     printf("%d", contagemBits('.'));
 
     printf("Codificar (c) ou decodificar (d)? ");
-    input = getchar();
+    input = getchar(); // evita o problema do \n ser pego no próximo input
 
     if(input == 'c'){
         opcaoCodificar();

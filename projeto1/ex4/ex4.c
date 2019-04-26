@@ -106,7 +106,7 @@ void main()
 
 int checarOperadora(unsigned long long int cartao, int tamanho) {
 
-    int prefixo = cartao/pow(10, tamanho-3); // primeiros 3 dígitos
+    int prefixo = cartao/pow(10, tamanho-3); // primeiros 3 digitos
 
     switch(tamanho) {
         case 13:

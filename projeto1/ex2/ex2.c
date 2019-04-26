@@ -9,3 +9,4 @@
 // ==================================================
 
 // TODO: explicar operadores & e <<
+//       gerar teste de mesa
