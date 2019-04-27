@@ -63,7 +63,7 @@ int tamanhoDoAno(int ano);
 int main(){
     int ano;
     
-    printf("Insira o ano do calendário a ser gerado: ");
+    printf("Insira o ano do calendario a ser gerado: ");
     scanf("%d", &ano);
     
     imprimirCalendario(ano);
@@ -177,14 +177,14 @@ int diasMes(int mes, int ano){
 int primeiroDiaAno(int ano) {
 
     // TODO: explicar congruencia de zeller e explicar pq +1 da certo
-
+    ano -= 1; // pra calendario gregoriano
     int k = ano % 100;
     int j = ano / 100;
 
-    int diaSemana = 1 + 52/10 + k + k/4 + j/4 + 5*j;
+    int diaSemana = 1 + (13*14)/5 + k + k/4 + j/4 + 5*j;
     diaSemana = diaSemana % 7;
 
-    return diaSemana+1;
+    return (diaSemana+5)%7 + 1; // retorna em formato ISO (0 -> dom, 1 -> seg, ...)
 
 }
 
