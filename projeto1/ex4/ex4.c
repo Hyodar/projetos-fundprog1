@@ -59,8 +59,8 @@ void main()
 
         digito = caractere - '0';
 
-        cartao += digito;
         cartao *= 10;
+        cartao += digito;
 
         tamanho++;
         printf("%c", caractere);
@@ -106,7 +106,7 @@ void main()
 
 int checarOperadora(unsigned long long int cartao, int tamanho) {
 
-    int prefixo = cartao/pow(10, tamanho-3); // primeiros 3 digitos
+    int prefixo = cartao/pow(10, tamanho-4); // primeiros 4 digitos
 
     switch(tamanho) {
         case 13:
