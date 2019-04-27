@@ -24,7 +24,7 @@ void opcaoDecodificar();
 
 void opcaoCodificar();
 
-void decodificarCaractere(int decimal);
+int decodificarCaractere(int decimal);
 
 int codificarCaractere(int caractere);
 
@@ -36,20 +36,18 @@ int main ()
 
     char input;
 
-    printf("%d", contagemBits('.'));
-
     printf("Codificar (c) ou decodificar (d)? ");
-    input = getchar(); // evita o problema do \n ser pego no próximo input
+    scanf("%c%*c", &input); // evita o problema do \n ser pego no próximo input
 
     if(input == 'c'){
         opcaoCodificar();
     }
-
     else if(input == 'd'){
         opcaoDecodificar();
     }
-    else
+    else{
         printf("Opcao invalida");
+    }
 
     return 0;
 
@@ -72,7 +70,7 @@ void opcaoCodificar(){
 
     int caractere;
 
-    getchar();
+    //getchar();
 
     while ((caractere = getchar())!= '\n')
     {
