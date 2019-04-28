@@ -25,10 +25,15 @@
 #define DISCOVER 4
 #define ENROUTE 5
 #define JCB 6
-#define SEM_OPERADORA -1
+#define OPERADORA_DESCONHECIDA -1
 
 #define MAX_TAMANHO 16
 #define MIN_TAMANHO 13
+
+#define ERRO_CARACTERE " Caracteres invalidos"
+#define ERRO_MAX_TAMANHO " Numero muito longo"
+#define ERRO_MIN_TAMANHO " Numero muito curto"
+#define ERRO_OPERADORA " Operadora desconhecida"
 
 // ------------------------------------------------------------------------------------
 // Protótipos de função
@@ -42,7 +47,7 @@ void imprimirOperadora(int operadora);
 // ------------------------------------------------------------------------------------
 // Main
 
-void main()
+int main()
 {
     char caractere;
     int digito;
@@ -53,8 +58,8 @@ void main()
 
     int erroCaractere = 0;
 
+    printf("Insira o numero de cartao: ");
     while((caractere = getchar()) != '\n' ){
-
         if(caractere < '0' || caractere > '9') erroCaractere = 1;
 
         digito = caractere - '0';
@@ -68,25 +73,25 @@ void main()
 
 
     if(erroCaractere) {
-        printf(" Caracteres invalidos");
-        return;
+        printf(ERRO_CARACTERE);
+        return 0;
     }
 
     if(tamanho > MAX_TAMANHO) {
-        printf(" Numero muito longo");
-        return;
+        printf(ERRO_MAX_TAMANHO);
+        return 0;
     }
 
     if(tamanho < MIN_TAMANHO) {
-        printf(" Numero muito curto");
-        return;
+        printf(ERRO_MIN_TAMANHO);
+        return 0;
     }
 
     operadora = checarOperadora(cartao, tamanho);
 
-    if(operadora == SEM_OPERADORA){
-        printf(" Operadora desconhecida");
-        return;
+    if(operadora == OPERADORA_DESCONHECIDA){
+        printf(ERRO_OPERADORA);
+        return 0;
     }
 
     imprimirOperadora(operadora);
@@ -97,12 +102,19 @@ void main()
         printf(", invalido");
     }
 
-    return;
+    return 0;
 
 }
 
 // ------------------------------------------------------------------------------------
 // Funções
+
+
+/*! Checa qual eh a operadora do cartao com base no seu tamanho e prefixo
+    \param cartao numero do cartao
+    \param tamanho tamanho do numero do cartao
+    \return 0 a 6 como vinculo a uma operadora ou -1 para operadora desconhecida
+*/
 
 int checarOperadora(unsigned long long int cartao, int tamanho) {
 
@@ -129,9 +141,17 @@ int checarOperadora(unsigned long long int cartao, int tamanho) {
             if(prefixo/1000 == 3) return JCB;
     }
 
-    return SEM_OPERADORA;
+    return OPERADORA_DESCONHECIDA;
 
 }
+
+// ----------------------------------------------------------------------------
+
+/*! Verifica a validade do numero de cartao pelo algoritmo de Luhn
+    \param cartao numero do cartao
+    \param tamanho tamanho do numero do cartao
+    \return 1 para valido, 0 para invalido
+*/
 
 int algoritmoDeLuhn(unsigned long long int cartao, int tamanho) {
 
@@ -155,6 +175,12 @@ int algoritmoDeLuhn(unsigned long long int cartao, int tamanho) {
     return !(soma%10);
 
 }
+
+// ----------------------------------------------------------------------------
+
+/*! Imprime o nome da operadora
+    \param operadora numero da operadora
+*/
 
 void imprimirOperadora(int operadora) {
 

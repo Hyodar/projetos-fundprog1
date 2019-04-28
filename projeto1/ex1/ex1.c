@@ -39,9 +39,11 @@
 
 void imprimirCabecalho(int mes, int ano, int tamanhoAno);
 
+void imprimirNomeMes(int mes, int ano);
+
 int imprimirConteudo(int mes, int ano, int diaSemana);
 
-int imprimirMes(int mes, int ano, int diaSemana, int tamanhoAno);
+int imprimirCalendarioMes(int mes, int ano, int diaSemana, int tamanhoAno);
 
 void imprimirCalendario(int ano);
 
@@ -74,53 +76,79 @@ int main(){
 // ------------------------------------------------------------------------------------
 // Funções
 
+
+/*! Imprime o cabecalho do calendario de cada mes
+    \param mes numero do mes (0 -> jan)
+    \param ano numero do ano
+    \param tamanhoAno numero de digitos do ano
+*/
+
 void imprimirCabecalho(int mes, int ano, int tamanhoAno) {
 
     printf("\n\n");
-    centralizarCabecalho(mes, tamanhoAno); // centraliza o cabeçalho superior
     
+    centralizarCabecalho(mes, tamanhoAno); // centraliza o cabeçalho superior
+    imprimirNomeMes(mes, ano);
+    
+    printf("\n DOM SEG TER QUA QUI SEX SAB\n");
+
+}
+
+// ----------------------------------------------------------------------------
+
+void imprimirNomeMes(int mes, int ano) {
     switch(mes) {
         case 0:
             printf("Janeiro de %d", ano);
             break;
+            
         case 1:
             printf("Fevereiro de %d", ano);
             break;
+            
         case 2:
             printf("Marco de %d", ano);
             break;
+            
         case 3:
             printf("Abril de %d", ano);
             break;
+            
         case 4:
             printf("Maio de %d", ano);
             break;
+            
         case 5:
             printf("Junho de %d", ano);
             break;
+            
         case 6:
             printf("Julho de %d", ano);
             break;
+            
         case 7:
             printf("Agosto de %d", ano);
             break;
+            
         case 8:
             printf("Setembro de %d", ano);
             break;
+            
         case 9:
             printf("Outubro de %d", ano);
             break;
+            
         case 10:
             printf("Novembro de %d", ano);
             break;
+            
         case 11:
             printf("Dezembro de %d", ano);
             break;
     }
-
-    printf("\n DOM SEG TER QUA QUI SEX SAB\n");
-
 }
+
+// ----------------------------------------------------------------------------
 
 int imprimirConteudo(int mes, int ano, int diaSemana) {
 
@@ -142,7 +170,9 @@ int imprimirConteudo(int mes, int ano, int diaSemana) {
 
 }
 
-int imprimirMes(int mes, int ano, int diaSemana, int tamanhoAno) {
+// ----------------------------------------------------------------------------
+
+int imprimirCalendarioMes(int mes, int ano, int diaSemana, int tamanhoAno) {
 
     imprimirCabecalho(mes, ano, tamanhoAno);
     int diaSemanaProx = imprimirConteudo(mes, ano, diaSemana);
@@ -151,9 +181,13 @@ int imprimirMes(int mes, int ano, int diaSemana, int tamanhoAno) {
 
 }
 
+// ----------------------------------------------------------------------------
+
 int isBissexto(int ano){
     return ano%4==0 && (ano%100!=0 || ano%400==0);
 }
+
+// ----------------------------------------------------------------------------
 
 int diasMes(int mes, int ano){
 
@@ -174,9 +208,11 @@ int diasMes(int mes, int ano){
 
 }
 
+// ----------------------------------------------------------------------------
+
 int primeiroDiaAno(int ano) {
 
-    // TODO: explicar congruencia de zeller e explicar pq +1 da certo
+    // TODO: explicar congruencia de zeller e explicar pq (h+5)%7 + 1 da certo
     ano -= 1; // pra calendario gregoriano
     int k = ano % 100;
     int j = ano / 100;
@@ -188,6 +224,8 @@ int primeiroDiaAno(int ano) {
 
 }
 
+// ----------------------------------------------------------------------------
+
 void imprimirCalendario(int ano) {
     
     printf("\n         CALENDARIO:         ");
@@ -196,10 +234,12 @@ void imprimirCalendario(int ano) {
     int tamanhoAno = tamanhoDoAno(ano);
 
     for(int i=0; i<12; i++){
-        primeiroDia = imprimirMes(i, ano, primeiroDia, tamanhoAno); // atualiza o primeiro dia da semana de cada mês sem necessidade de usar a congruencia de zeller dnv
+        primeiroDia = imprimirCalendarioMes(i, ano, primeiroDia, tamanhoAno); // atualiza o primeiro dia da semana de cada mês sem necessidade de usar a congruencia de zeller dnv
     }
 
 }
+
+// ----------------------------------------------------------------------------
 
 void centralizarCabecalho(int mes, int tamanhoAno) {
     
@@ -233,11 +273,15 @@ void centralizarCabecalho(int mes, int tamanhoAno) {
     
 }
 
+// ----------------------------------------------------------------------------
+
 void printEspacos(int n) {
     for(int i=0;i<n;i++){
         putchar(' ');
     }
 }
+
+// ----------------------------------------------------------------------------
 
 int tamanhoDoAno(int ano) {
     if(ano>=1000) return 4;
@@ -245,3 +289,5 @@ int tamanhoDoAno(int ano) {
     else if(ano >= 10) return 2;
     return 1;
 }
+
+// ----------------------------------------------------------------------------
