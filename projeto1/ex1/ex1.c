@@ -76,7 +76,6 @@ int main(){
 // ------------------------------------------------------------------------------------
 // Funções
 
-
 /*! Imprime o cabecalho do calendario de cada mes
     \param mes numero do mes (0 -> jan)
     \param ano numero do ano
@@ -220,7 +219,7 @@ int primeiroDiaAno(int ano) {
     int diaSemana = 1 + (13*14)/5 + k + k/4 + j/4 + 5*j;
     diaSemana = diaSemana % 7;
 
-    return (diaSemana+5)%7 + 1; // retorna em formato ISO (0 -> dom, 1 -> seg, ...)
+    return (diaSemana+5)%7 + 1; // retorna em formato ISO (7 -> dom, 1 -> seg, ...)
 
 }
 
@@ -230,11 +229,12 @@ void imprimirCalendario(int ano) {
     
     printf("\n         CALENDARIO:         ");
 
-    int primeiroDia = primeiroDiaAno(ano);
+    int primeiroDia = primeiroDiaAno(ano)%7;
     int tamanhoAno = tamanhoDoAno(ano);
 
+    // atualiza o primeiro dia da semana de cada mês sem necessidade de usar a congruencia de zeller dnv
     for(int i=0; i<12; i++){
-        primeiroDia = imprimirCalendarioMes(i, ano, primeiroDia, tamanhoAno); // atualiza o primeiro dia da semana de cada mês sem necessidade de usar a congruencia de zeller dnv
+        primeiroDia = imprimirCalendarioMes(i, ano, primeiroDia, tamanhoAno);
     }
 
 }
