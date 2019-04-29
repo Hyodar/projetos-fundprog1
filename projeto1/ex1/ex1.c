@@ -210,8 +210,12 @@ int diasMes(int mes, int ano){
 // ----------------------------------------------------------------------------
 
 int primeiroDiaAno(int ano) {
-
-    // TODO: explicar congruencia de zeller e explicar pq (h+5)%7 + 1 da certo
+    
+    // Algoritmo Congruencia de Zeller
+    // https://en.wikipedia.org/wiki/Zeller%27s_congruence
+    
+    // A versao usada eh feita para implementacao em software, ja que a operacao mod funciona propriamente para 0 e positivos em c
+    
     ano -= 1; // pra calendario gregoriano
     int k = ano % 100;
     int j = ano / 100;
