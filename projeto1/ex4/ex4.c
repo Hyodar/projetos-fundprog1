@@ -44,6 +44,8 @@ int algoritmoDeLuhn(unsigned long long int cartao, int tamanho);
 
 void imprimirOperadora(int operadora);
 
+int isLetra(char caractere);
+
 // ------------------------------------------------------------------------------------
 // Main
 
@@ -60,7 +62,7 @@ int main()
 
     printf("Insira o numero de cartao: ");
     while((caractere = getchar()) != '\n' ){
-        if(caractere < '0' || caractere > '9') erroCaractere = 1;
+        if(isLetra(caractere)) erroCaractere = 1;
 
         digito = caractere - '0';
 
@@ -195,3 +197,14 @@ void imprimirOperadora(int operadora) {
     }
 
 }
+
+// ----------------------------------------------------------------------------
+
+/*! Checa se o caractere eh um numeral
+    \param caractere caractere a ser checado
+*/
+
+int isLetra(char caractere) {
+    return (caractere < '0' || caractere > '9');
+}
+

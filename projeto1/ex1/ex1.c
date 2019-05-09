@@ -1,4 +1,3 @@
-
 // ==================================================
 //  ex1.c
 //
@@ -64,12 +63,12 @@ int tamanhoDoAno(int ano);
 
 int main(){
     int ano;
-    
+
     printf("Insira o ano do calendario a ser gerado: ");
     scanf("%d", &ano);
-    
+
     imprimirCalendario(ano);
-    
+
     return 0;
 }
 
@@ -85,62 +84,67 @@ int main(){
 void imprimirCabecalho(int mes, int ano, int tamanhoAno) {
 
     printf("\n\n");
-    
+
     centralizarCabecalho(mes, tamanhoAno); // centraliza o cabeçalho superior
     imprimirNomeMes(mes, ano);
-    
+
     printf("\n DOM SEG TER QUA QUI SEX SAB\n");
 
 }
 
 // ----------------------------------------------------------------------------
 
+/*! Imprime nome do mes
+    \param mes numero do mes (0 -> jan)
+    \param ano numero do ano
+*/
+
 void imprimirNomeMes(int mes, int ano) {
     switch(mes) {
         case 0:
             printf("Janeiro de %d", ano);
             break;
-            
+
         case 1:
             printf("Fevereiro de %d", ano);
             break;
-            
+
         case 2:
             printf("Marco de %d", ano);
             break;
-            
+
         case 3:
             printf("Abril de %d", ano);
             break;
-            
+
         case 4:
             printf("Maio de %d", ano);
             break;
-            
+
         case 5:
             printf("Junho de %d", ano);
             break;
-            
+
         case 6:
             printf("Julho de %d", ano);
             break;
-            
+
         case 7:
             printf("Agosto de %d", ano);
             break;
-            
+
         case 8:
             printf("Setembro de %d", ano);
             break;
-            
+
         case 9:
             printf("Outubro de %d", ano);
             break;
-            
+
         case 10:
             printf("Novembro de %d", ano);
             break;
-            
+
         case 11:
             printf("Dezembro de %d", ano);
             break;
@@ -148,6 +152,13 @@ void imprimirNomeMes(int mes, int ano) {
 }
 
 // ----------------------------------------------------------------------------
+
+/*! Imprime os dias do calendario de um mes
+    \param mes numero do mes (0 -> jan)
+    \param ano numero do ano
+    \param diaSemana dia da semana do primeiro dia do mes
+    \return dia da semana do primeiro dia do proximo mes
+*/
 
 int imprimirConteudo(int mes, int ano, int diaSemana) {
 
@@ -171,6 +182,14 @@ int imprimirConteudo(int mes, int ano, int diaSemana) {
 
 // ----------------------------------------------------------------------------
 
+/*! Imprime o calendario de cada mes
+    \param mes numero do mes (0 -> jan)
+    \param ano numero do ano
+    \param diaSemana dia da semana do primeiro dia do mes
+    \param tamanhoAno numero de digitos do ano
+    \return dia da semana do primeiro dia do proximo mes
+*/
+
 int imprimirCalendarioMes(int mes, int ano, int diaSemana, int tamanhoAno) {
 
     imprimirCabecalho(mes, ano, tamanhoAno);
@@ -182,11 +201,22 @@ int imprimirCalendarioMes(int mes, int ano, int diaSemana, int tamanhoAno) {
 
 // ----------------------------------------------------------------------------
 
+/*! Verifica se o ano eh bissexto
+    \param ano numero do ano
+    \return 1 se o ano for bissexto e 0 se nao for
+*/
+
 int isBissexto(int ano){
     return ano%4==0 && (ano%100!=0 || ano%400==0);
 }
 
 // ----------------------------------------------------------------------------
+
+/*! Determina o numero de dias do mes
+    \param mes numero do mes (0 -> jan)
+    \param ano numero do ano
+    \return numero de dias do mes
+*/
 
 int diasMes(int mes, int ano){
 
@@ -209,13 +239,18 @@ int diasMes(int mes, int ano){
 
 // ----------------------------------------------------------------------------
 
+/*! Determina o dia da semana do primeiro dia do ano
+    \param ano numero do ano
+    \return dia da semana do primeiro dia do ano em formato ISO
+*/
+
 int primeiroDiaAno(int ano) {
-    
+
     // Algoritmo Congruencia de Zeller
     // https://en.wikipedia.org/wiki/Zeller%27s_congruence
-    
+
     // A versao usada eh feita para implementacao em software, ja que a operacao mod funciona propriamente para 0 e positivos em c
-    
+
     ano -= 1; // pra calendario gregoriano
     int k = ano % 100;
     int j = ano / 100;
@@ -229,8 +264,12 @@ int primeiroDiaAno(int ano) {
 
 // ----------------------------------------------------------------------------
 
+/*! Imprime o calendario do ano
+    \param ano numero do ano
+*/
+
 void imprimirCalendario(int ano) {
-    
+
     printf("\n         CALENDARIO:         ");
 
     int primeiroDia = primeiroDiaAno(ano)%7;
@@ -245,11 +284,16 @@ void imprimirCalendario(int ano) {
 
 // ----------------------------------------------------------------------------
 
+/*! Centraliza o cabeçalho
+    \param mes numero do mes (0 -> jan)
+    \param tamanhoAno numero de digitos do ano
+*/
+
 void centralizarCabecalho(int mes, int tamanhoAno) {
-    
+
     int nEspacos;
     int tamanhoMes;
-    
+
     // pega o tamanho do nome do mês
     switch(mes){
        case 0: tamanhoMes = LEN_JANEIRO; break;
@@ -265,19 +309,23 @@ void centralizarCabecalho(int mes, int tamanhoAno) {
        case 10: tamanhoMes = LEN_NOVEMBRO; break;
        case 11: tamanhoMes = LEN_DEZEMBRO; break;
     }
-    
+
     // pra que o texto esteja centralizado, o tamanho dele (contando os espaços) deve ser igual ao tamanho da linha
     // logo, o numero de espaços deve ser igual ao tamanho livre (tamanhoLinha - tamanhoEscrito) dividido por dois (tem dois lados)
     // como só precisa printar de um lado, printa só o número de espaços antes
-    
+
     // 4 -> strlen(" de ") pra compensar o resto do cabeçalho no cálculo do texto escrito
     nEspacos = (LEN_CABECALHO - (tamanhoMes + 4 + tamanhoAno))/2;
-    
+
     printEspacos(nEspacos);
-    
+
 }
 
 // ----------------------------------------------------------------------------
+
+/*! Imprime o numero de espaços requerido
+    \param n numero de espaços
+*/
 
 void printEspacos(int n) {
     for(int i=0;i<n;i++){
@@ -286,6 +334,11 @@ void printEspacos(int n) {
 }
 
 // ----------------------------------------------------------------------------
+
+/*! Verifica o numero de digitos do ano
+    \param ano numero do ano
+    \return numero de digitos do ano
+*/
 
 int tamanhoDoAno(int ano) {
     if(ano>=1000) return 4;

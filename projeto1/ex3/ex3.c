@@ -1,4 +1,3 @@
-
 // ==================================================
 //  ex3.c
 //
@@ -17,8 +16,6 @@
 // Protótipos de função
 
 int contagemBits(int caractere);
-
-int checarCorrompido(int binario);
 
 void opcaoDecodificar();
 
@@ -56,6 +53,11 @@ int main ()
 // ------------------------------------------------------------------------------------
 // Funções
 
+/*! Conta o numero de bits um de um caractere
+    \param caractere caractere da mensagem
+    \return numero de bits um de um caractere
+*/
+
 int contagemBits(int caractere){
 
     int soma = 0;
@@ -66,11 +68,14 @@ int contagemBits(int caractere){
     return soma;
 }
 
+// ----------------------------------------------------------------------------
+
+/*! Menu de codificaçao de mensagem
+*/
+
 void opcaoCodificar(){
 
     int caractere;
-
-    //getchar();
 
     while ((caractere = getchar())!= '\n')
     {
@@ -80,12 +85,49 @@ void opcaoCodificar(){
     }
 }
 
+// ----------------------------------------------------------------------------
+
+/*! Codifica um caractere inserido
+    \param caractere caractere de uma mensagem
+    \return caractere codificado
+*/
+
 int codificarCaractere(int caractere) {
-    return caractere + 128;
+    return caractere + 128; //torna o bit da posiçao 7 1
 }
+
+// ----------------------------------------------------------------------------
+
+/*! Decodifica um caractere inserido
+    \param caractere caractere de uma mensagem
+    \return caractere decodificado
+*/
 
 int decodificarCaractere(int caractere) {
     return caractere - 128;
 }
 
-void opcaoDecodificar(){}
+// ----------------------------------------------------------------------------
+
+/*! Menu de decodificaçao
+*/
+
+void opcaoDecodificar(){
+    int input=0;
+
+    while(input!='.'){
+        scanf("%d", &input);
+        if(contagemBits(input)%2!=0){
+            printf("*");
+        }
+        else{
+            if(input>=128){
+                input=decodificarCaractere(input);
+            }
+            printf("%c", input);
+        }
+
+    }
+}
+
+// ----------------------------------------------------------------------------
