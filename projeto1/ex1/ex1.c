@@ -341,10 +341,16 @@ void printEspacos(int n) {
 */
 
 int tamanhoDoAno(int ano) {
-    if(ano>=1000) return 4;
-    else if(ano >=100) return 3;
-    else if(ano >= 10) return 2;
-    return 1;
+    
+    int tam = 0;
+    
+    while(ano != 0){
+        ano /= 10;
+        ++tam;
+    }
+    
+    if(tam>=15) return 15;
+    return tam;
 }
 
 // ----------------------------------------------------------------------------
