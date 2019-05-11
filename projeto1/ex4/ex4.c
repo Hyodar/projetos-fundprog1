@@ -125,10 +125,12 @@ int checarOperadora(unsigned long long int cartao, int tamanho) {
     switch(tamanho) {
         case 13:
             if(prefixo/1000 == 4) return VISA;
+            break;
         case 14:
             if(prefixo/100 == 30) return DINERS;
             if(prefixo/100 == 36) return DINERS;
             if(prefixo/100 == 38) return DINERS;
+            break;
         case 15:
             if(prefixo/100 == 34) return AMEX;
             if(prefixo/100 == 37) return AMEX;
@@ -136,11 +138,13 @@ int checarOperadora(unsigned long long int cartao, int tamanho) {
             if(prefixo == 2149) return ENROUTE;
             if(prefixo == 2131) return JCB;
             if(prefixo == 1800) return JCB;
+            break;
         case 16:
             if(prefixo/100 >= 51 && prefixo/100 <= 55) return MASTERCARD;
             if(prefixo/1000 == 4) return VISA;
             if(prefixo == 6011) return DISCOVER;
             if(prefixo/1000 == 3) return JCB;
+            break;
     }
 
     return OPERADORA_DESCONHECIDA;
@@ -207,4 +211,3 @@ void imprimirOperadora(int operadora) {
 int isLetra(char caractere) {
     return (caractere < '0' || caractere > '9');
 }
-
