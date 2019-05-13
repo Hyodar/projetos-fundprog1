@@ -29,6 +29,7 @@
 
 #define MAX_TAMANHO 16
 #define MIN_TAMANHO 13
+#define TAMANHO_INVALIDO -1
 
 #define ERRO_CARACTERE " Caracteres invalidos"
 #define ERRO_MAX_TAMANHO " Numero muito longo"
@@ -38,11 +39,15 @@
 // ------------------------------------------------------------------------------------
 // Protótipos de função
 
+void processarCartao(unsigned long long int cartao, int tamanho, int erroCaractere);
+
 int checarOperadora(unsigned long long int cartao, int tamanho);
 
 int algoritmoDeLuhn(unsigned long long int cartao, int tamanho);
 
 void imprimirOperadora(int operadora);
+
+int verificarTamanho(int tamanho);
 
 int isLetra(char caractere);
 
@@ -56,12 +61,10 @@ int main()
     unsigned long long int cartao = 0;
     int tamanho = 0;
 
-    int operadora;
-
     int erroCaractere = 0;
 
     printf("Insira o numero de cartao: ");
-    while((caractere = getchar()) != '\n' ){
+    while((caractere = getchar()) != '\n'){
         if(isLetra(caractere)) erroCaractere = 1;
 
         digito = caractere - '0';
@@ -73,27 +76,40 @@ int main()
         printf("%c", caractere);
     }
 
+    processarCartao(cartao, tamanho, erroCaractere);
 
+    return 0;
+
+}
+
+// ------------------------------------------------------------------------------------
+// Funções
+
+
+/*! Processa as informações do cartão e identifica erros
+    \param cartao numero do cartao
+    \param tamanho tamanho do numero do cartao
+    \param erroCaractere indica se foi lido um caractere nao numerico
+*/
+
+void processarCartao(unsigned long long int cartao, int tamanho, int erroCaractere){
+    
+    int operadora;
+    
     if(erroCaractere) {
         printf(ERRO_CARACTERE);
-        return 0;
+        return;
     }
 
-    if(tamanho > MAX_TAMANHO) {
-        printf(ERRO_MAX_TAMANHO);
-        return 0;
-    }
-
-    if(tamanho < MIN_TAMANHO) {
-        printf(ERRO_MIN_TAMANHO);
-        return 0;
+    if(verificarTamanho(tamanho) == TAMANHO_INVALIDO) {
+        return;
     }
 
     operadora = checarOperadora(cartao, tamanho);
 
     if(operadora == OPERADORA_DESCONHECIDA){
         printf(ERRO_OPERADORA);
-        return 0;
+        return;
     }
 
     imprimirOperadora(operadora);
@@ -103,14 +119,29 @@ int main()
     } else {
         printf(", invalido");
     }
-
-    return 0;
-
 }
 
-// ------------------------------------------------------------------------------------
-// Funções
+// ----------------------------------------------------------------------------
 
+/*! Vericia se o tamanho do cartão é válido
+    \param tamanho tamanho do numero do cartao
+*/
+
+int verificarTamanho(int tamanho){
+    if(tamanho > MAX_TAMANHO) {
+        printf(ERRO_MAX_TAMANHO);
+        return TAMANHO_INVALIDO;
+    }
+    
+    if(tamanho < MIN_TAMANHO) {
+        printf(ERRO_MIN_TAMANHO);
+        return TAMANHO_INVALIDO;
+    }
+    
+    return tamanho;
+}
+
+// ----------------------------------------------------------------------------
 
 /*! Checa qual eh a operadora do cartao com base no seu tamanho e prefixo
     \param cartao numero do cartao
@@ -156,7 +187,7 @@ int checarOperadora(unsigned long long int cartao, int tamanho) {
 /*! Verifica a validade do numero de cartao pelo algoritmo de Luhn
     \param cartao numero do cartao
     \param tamanho tamanho do numero do cartao
-    \return 1 para valido, 0 para invalido
+    \return n>0 para valido, 0 para invalido
 */
 
 int algoritmoDeLuhn(unsigned long long int cartao, int tamanho) {
@@ -164,6 +195,8 @@ int algoritmoDeLuhn(unsigned long long int cartao, int tamanho) {
     int soma = 0;
     int n;
 
+    // digito por digito, se estiver em uma posicao impar (comecando do 0)
+    // é dobrado e seus algarismos sao somados
     for(int i=0; i<tamanho; i++){
         n = cartao%10;
 
@@ -178,6 +211,7 @@ int algoritmoDeLuhn(unsigned long long int cartao, int tamanho) {
         cartao /= 10;
     }
 
+    // retorna 0 se a soma nao for congruente a 0 em modulo 10
     return !(soma%10);
 
 }
@@ -211,3 +245,5 @@ void imprimirOperadora(int operadora) {
 int isLetra(char caractere) {
     return (caractere < '0' || caractere > '9');
 }
+
+// ----------------------------------------------------------------------------

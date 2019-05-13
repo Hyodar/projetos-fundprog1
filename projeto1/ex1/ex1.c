@@ -101,53 +101,18 @@ void imprimirCabecalho(int mes, int ano, int tamanhoAno) {
 
 void imprimirNomeMes(int mes, int ano) {
     switch(mes) {
-        case 0:
-            printf("Janeiro de %d", ano);
-            break;
-
-        case 1:
-            printf("Fevereiro de %d", ano);
-            break;
-
-        case 2:
-            printf("Marco de %d", ano);
-            break;
-
-        case 3:
-            printf("Abril de %d", ano);
-            break;
-
-        case 4:
-            printf("Maio de %d", ano);
-            break;
-
-        case 5:
-            printf("Junho de %d", ano);
-            break;
-
-        case 6:
-            printf("Julho de %d", ano);
-            break;
-
-        case 7:
-            printf("Agosto de %d", ano);
-            break;
-
-        case 8:
-            printf("Setembro de %d", ano);
-            break;
-
-        case 9:
-            printf("Outubro de %d", ano);
-            break;
-
-        case 10:
-            printf("Novembro de %d", ano);
-            break;
-
-        case 11:
-            printf("Dezembro de %d", ano);
-            break;
+        case 0: printf("Janeiro de %d", ano); break;
+        case 1: printf("Fevereiro de %d", ano); break;
+        case 2: printf("Marco de %d", ano); break;
+        case 3: printf("Abril de %d", ano); break;
+        case 4: printf("Maio de %d", ano); break;
+        case 5: printf("Junho de %d", ano); break;
+        case 6: printf("Julho de %d", ano); break;
+        case 7: printf("Agosto de %d", ano); break;
+        case 8: printf("Setembro de %d", ano); break;
+        case 9: printf("Outubro de %d", ano); break;
+        case 10: printf("Novembro de %d", ano); break;
+        case 11: printf("Dezembro de %d", ano); break;
     }
 }
 
@@ -166,10 +131,14 @@ int imprimirConteudo(int mes, int ano, int diaSemana) {
 
     printEspacos(4*diaSemana); // enche de espaços onde seriam os dias do outro mês
 
-    for(int i=1; i<=nDias; i++) {
+    // evita a necessidade de checar se i > 1 dentro do loop para imprimir um '\n'
+    printf("%4d", 1);
+    ++diaSemana;
+    
+    for(int i=2; i<=nDias; i++) {
         diaSemana = diaSemana%7;
 
-        if(diaSemana == 0 && i>1) printf("\n");
+        if(diaSemana == 0) printf("\n");
 
         printf("%4d", i);
 
@@ -310,11 +279,13 @@ void centralizarCabecalho(int mes, int tamanhoAno) {
        case 11: tamanhoMes = LEN_DEZEMBRO; break;
     }
 
-    // pra que o texto esteja centralizado, o tamanho dele (contando os espaços) deve ser igual ao tamanho da linha
-    // logo, o numero de espaços deve ser igual ao tamanho livre (tamanhoLinha - tamanhoEscrito) dividido por dois (tem dois lados)
-    // como só precisa printar de um lado, printa só o número de espaços antes
-
-    // 4 -> strlen(" de ") pra compensar o resto do cabeçalho no cálculo do texto escrito
+    /* 
+    pra que o texto esteja centralizado, o tamanho dele (contando os espaços vazios) deve ser igual ao tamanho da linha
+    logo, o numero de espaços anteriores e posteriores deve ser igual ao tamanho livre (tamanhoLinha - tamanhoEscrito)
+    como os espaços posteriores não mudariam nada visualmente, printa só o número de espaços anteriores
+    */
+    
+    // 4 -> strlen(" de ")
     nEspacos = (LEN_CABECALHO - (tamanhoMes + 4 + tamanhoAno))/2;
 
     printEspacos(nEspacos);
@@ -349,7 +320,9 @@ int tamanhoDoAno(int ano) {
         ++tam;
     }
     
-    if(tam>=15) return 15;
+    // A centralização só funcionaria para números até 15 dígitos,
+    // mas como ano é int, não há a necessidade de checar se é maior que 15
+    
     return tam;
 }
 

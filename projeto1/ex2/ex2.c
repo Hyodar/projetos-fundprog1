@@ -8,17 +8,15 @@
 //  Projeto Prático I
 // ==================================================
 
-// TODO: gerar teste de mesa
-
 /*
 ------------------------------------------------------------------------------------
 Explicação:
 
-    & : Bitwise AND (and bit a bit)
+    & : Bitwise AND (AND bit a bit)
         Operação entre dados binários (um int, por exemplo) que faz a operação AND entre cada um dos bits dos operandos,
         resultando em outro número.
         
-        Exemplificando: 
+        Operação: 
             10110001 (base 2) = 177 (base 10)
           & 11110110 (base 2) = 246 (base 10)
             --------
@@ -30,13 +28,15 @@ Explicação:
         Por exemplo: na linha 11 do teste de mesa abaixo, como bin_y = 00000100, seu & com um número começando como 0 
         e sendo incrementado vai evidentemente exibir 4 asteriscos inicialmente, pois até que o número da coluna tenha
         um bit 1 na posição 3, ele vai ter de ser incrementado 3 vezes.
-        Após isso, ele vai exibir 4 grupos de espaços, considerando que, quando no número da coluna, o bit da posição 3 é 1, até que vire
-        00001000, seu & com a linha vai ser estritamente positivo. 
+        Após isso, ele vai exibir 4 grupos de espaços, considerando que, quando o bit da posição 3 do número da coluna é 1,
+        até que vire 00001000 por incrementos de 1, seu & com a linha vai ser estritamente positivo.
+        Finalmente, pela mesma lógica, imprimirá mais 4 asteriscos.
         
-        Estendendo esse raciocínio à todas as linhas, fica evidente que o uso da relação entre potências de 2 dos binários traz
-        uma sequência de 
-        ######################### continuar
-        
+        Estendendo esse raciocínio à todas as linhas, fica evidente que o uso do E bit-a-bit traz uma sequência de '* ' e '  ' que mostra
+        uma relação entre as potências de 2 que formam um binário e a ideia do triângulo de Sierpinski (a divisão sucessiva de medidas por 2,
+        formando sub-triângulos cada vez menores). Esse comportamento matemático, que interliga fractais e operações bit-a-bit, é motivo de
+        interessantes discussões mais aprofundadas, como visto em alguns trabalhos acadêmicos como esse: 
+        http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.462.7787&rep=rep1&type=pdf
     
     << : Bitwise Left Shift
         Operação em um dado binário, que faz com que seu conteúdo seja movido para a esquerda pelo número de posições desejado,
@@ -44,19 +44,26 @@ Explicação:
         número de casas constante são 0.
         
         
-        Exemplificando:
+        Operação:
             117 (base 10) = 01110101 (base 2)
             117 << 1 = 11101010 = 234 (base 10)
             
             portanto, 117 << 1 = 234
             
         Nesse caso, o SIZE (1<<4) seria literalmente 2^4, pois o bit 1 foi deslocado 4 posições à direita.
-        O algoritmo usado depende das potências de 2 para funcionar, já que usa a linha como um espaço 
-        ##################### continuar
+        No fractal mostrado, as medidas das bases dos triângulos são sucessivamente divididas por 2. Considerando
+        que as colunas são números inteiros, se torna inválida a possibilidade de que algum lado seja ímpar e sua
+        decomposição em fatores primos seja potência de algo senão 2, pois:
+            - potências de outros números, ao serem divididos por 2, levariam a um ímpar em algum momento
+            - é impossível imprimir um asterisco na coluna 3.5, por exemplo
+        O uso de SIZE (1 << n) é interessante, já que para qualquer n diferente de 0, SIZE será par e somente
+        potência de 2, o que garante que conforme as medidas forem sendo divididas por 2 para a formação de sub-triângulos
+        (a ideia desse fractal), sempre serão potências de 2 e nunca chegarão nos problemas mencionados até o menor lado ser 1,
+        que seria o final do programa.
             
     Teste de mesa:
             
-    linha   bin_y
+    linha   bin_y       
     0       00001111    _______________*
     1       00001110    ______________*_*_
     2       00001101    _____________*___*_
