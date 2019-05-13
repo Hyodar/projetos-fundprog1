@@ -76,11 +76,6 @@ int main()
         tamanho++;
         printf("%c", caractere);
     }
-    
-    if(tamanho == 0) {
-        printf(ERRO_CARTAO_NAO_INSERIDO);
-        return;
-    }
 
     processarCartao(cartao, tamanho, erroCaractere);
 
@@ -134,6 +129,12 @@ void processarCartao(unsigned long long int cartao, int tamanho, int erroCaracte
 */
 
 int verificarTamanho(int tamanho){
+    
+    if(tamanho == 0) {
+        printf(ERRO_CARTAO_NAO_INSERIDO);
+        return TAMANHO_INVALIDO;
+    }
+    
     if(tamanho > MAX_TAMANHO) {
         printf(ERRO_MAX_TAMANHO);
         return TAMANHO_INVALIDO;
