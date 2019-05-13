@@ -35,6 +35,7 @@
 #define ERRO_MAX_TAMANHO " Numero muito longo"
 #define ERRO_MIN_TAMANHO " Numero muito curto"
 #define ERRO_OPERADORA " Operadora desconhecida"
+#define ERRO_CARTAO_NAO_INSERIDO "Cartao nao inserido"
 
 // ------------------------------------------------------------------------------------
 // Protótipos de função
@@ -74,6 +75,11 @@ int main()
 
         tamanho++;
         printf("%c", caractere);
+    }
+    
+    if(tamanho == 0) {
+        printf(ERRO_CARTAO_NAO_INSERIDO);
+        return;
     }
 
     processarCartao(cartao, tamanho, erroCaractere);
